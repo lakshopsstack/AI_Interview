@@ -1,39 +1,53 @@
-name: Deploy to GCE
-
+name: Deploy to Google Compute Engine
+run-name: Deploy Frontend
 on:
   push:
     branches:
-      - main  # or your deployment branch
+      - main
+    paths:
+      - frontend/**
+      - .github/workflows/deploy-frontend.yml
 
 jobs:
   deploy:
     runs-on: self-hosted
 
-
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+        
+      - name: Install Frontend dependencies
+        working-directory: ./frontend
+        run: npm install
 
+      - name: Set Environment Variables
+        working-directory: ./frontend
+        run: |
+          echo "VITE_API_BASE_URL=https://edudiagno.com/api/v1" >> ./.env
+          echo "VITE_DSA_WS_BASE_URL=wss://edudiagno.com/api/v1/interview" >> ./.env
+      
+      - name: Build Frontend
+        working-directory: ./frontend
+        run: npm run build
+      
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.GCE_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          
           echo "${{ secrets.GCE_SSH_PUBLIC_KEY }}" > ~/.ssh/authorized_keys
           chmod 600 ~/.ssh/authorized_keys
-          
-          ssh-keyscan -H ${{ secrets.GCE_HOST }} >> ~/.ssh/known_hosts
-        shell: bash
+          ssh-keyscan -H ${{ secrets.GCE_HOST }} > ~/.ssh/known_hosts
 
-      - name: SSH and Deploy
+      - name: Deploy Frontend
+        working-directory: ./frontend/dist
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.GCE_USER }}@${{ secrets.GCE_HOST }} << 'EOF'
-            cd /path/to/your/app  # e.g., /home/lakshman/myapp
-            git pull origin main  # pull latest code
-            # Optional: stop previous app
-            # pkill -f app.py
-            # Run your app (example: Flask)
-            nohup python3 app.py > app.log 2>&1 &
-          EOF
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/id_rsa" \
+            ./ ${{ secrets.GCE_USER }}@${{ secrets.GCE_HOST }}:/home/${{ secrets.GCE_USER }}/frontend
+      
