@@ -1,5 +1,6 @@
 name: Deploy to Google Compute Engine
 run-name: Deploy Frontend
+
 on:
   push:
     branches:
@@ -21,33 +22,40 @@ jobs:
         with:
           node-version: '18'
         
-      - name: Install Frontend dependencies
+      - name: Install frontend dependencies
         working-directory: ./frontend
         run: npm install
 
-      - name: Set Environment Variables
+      - name: Set environment variables
         working-directory: ./frontend
         run: |
-          echo "VITE_API_BASE_URL=https://edudiagno.com/api/v1" >> ./.env
-          echo "VITE_DSA_WS_BASE_URL=wss://edudiagno.com/api/v1/interview" >> ./.env
+          echo "VITE_API_BASE_URL=https://edudiagno.com/api/v1" >> .env
+          echo "VITE_DSA_WS_BASE_URL=wss://edudiagno.com/api/v1/interview" >> .env
       
-      - name: Build Frontend
+      - name: Build frontend
         working-directory: ./frontend
         run: npm run build
-      
+
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.GCE_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          echo "${{ secrets.GCE_SSH_PUBLIC_KEY }}" > ~/.ssh/authorized_keys
-          chmod 600 ~/.ssh/authorized_keys
-          ssh-keyscan -H ${{ secrets.GCE_HOST }} > ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.GCE_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Deploy Frontend
-        working-directory: ./frontend/dist
+      - name: Deploy frontend to GCE VM
         run: |
           rsync -az --delete \
             -e "ssh -i ~/.ssh/id_rsa" \
-            ./ ${{ secrets.GCE_USER }}@${{ secrets.GCE_HOST }}:/home/${{ secrets.GCE_USER }}/frontend
-      
+            ./frontend/dist/ ${{ secrets.GCE_USER }}@${{ secrets.GCE_HOST }}:/home/${{ secrets.GCE_USER }}/frontend
+
+      - name: Start static server via SSH
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.GCE_USER }}@${{ secrets.GCE_HOST }} << 'EOF'
+            # Kill existing serve process if running
+            pkill -f "serve -s" || true
+            # Reinstall serve if needed
+            command -v serve >/dev/null 2>&1 || npm install -g serve
+            # Start serve in background on port 80
+            nohup serve -s /home/${{ secrets.GCE_USER }}/frontend -l 80 > serve.log 2>&1 &
+          EOF
