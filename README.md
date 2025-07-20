@@ -151,4 +151,4 @@ Our vision: **To make interviews smarter, fairer, and a little less awkward.**
 
 ---
 
-Happy coding, and welcome to the team! 🚀
+Happy coding , and welcome to the team! 🚀
