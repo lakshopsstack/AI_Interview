@@ -1,0 +1,35 @@
+AI INTERVIEWER CI/CD DOCUMENTATION
+================================
+
+# Welcome to the CI/CD Circus 🎪
+
+Here’s where the robots do the heavy lifting so you don’t have to. Our CI/CD setup is powered by GitHub Actions, which means every time you push to `main`, a well-trained bot springs into action to deploy your code. (No actual robots were harmed in the making of this pipeline.)
+
+## What’s Automated?
+- **Backend Deployment**: Whenever you push changes to `backend/`, the `deploy-backend.yml` workflow leaps into action. It:
+  - Checks out your code (because trust issues).
+  - Sets up SSH (with more secrets than your group chat).
+  - Syncs the backend code to a Google Compute Engine VM.
+  - Installs dependencies, runs migrations, and restarts the backend server.
+- **Frontend Deployment**: Push to `frontend/` and `deploy-frontend.yml` will:
+  - Check out your code (again, trust issues).
+  - Install Node.js and dependencies.
+  - Build the frontend (so your changes look pretty).
+  - Sync the build to the VM and deploy it.
+
+## Where’s the Magic?
+- All the action happens in `.github/workflows/`.
+- Secrets are managed in GitHub (so don’t go looking for passwords in the code — you won’t find any, we promise).
+
+## Troubleshooting Tips
+- If your deployment fails, don’t panic. Check the Actions tab on GitHub for logs. (Or just blame the last person who pushed.)
+- Make sure your secrets are set up in the repo settings. If you see a mysterious error, it’s probably a missing secret.
+- If all else fails, try turning it off and on again. (Classic.)
+
+## Want to Deploy Manually?
+- You can always SSH into the VM and do things the old-fashioned way. But where’s the fun in that?
+
+## Final Words
+- Our CI/CD is here to make your life easier. Treat it well, and it’ll treat you well. (Mostly.)
+
+Happy deploying! 

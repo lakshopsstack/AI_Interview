@@ -1,0 +1,60 @@
+name: Deploy to Google Compute Engine
+run-name: Deploy Backend
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - backend/**
+      - .github/workflows/deploy-backend.yml
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, linux]
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.GCE_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          echo "${{ secrets.GCE_SSH_PUBLIC_KEY }}" > ~/.ssh/authorized_keys
+          chmod 600 ~/.ssh/authorized_keys
+          ssh-keyscan -H ${{ secrets.GCE_HOST }} > ~/.ssh/known_hosts
+
+      - name: Sync code to GCE
+        working-directory: ./backend
+        run: |
+          rsync -az --delete \
+            -e "ssh -v -i ~/.ssh/id_rsa" \
+            ./ ${{ secrets.GCE_USER }}@${{ secrets.GCE_HOST }}:/home/${{ secrets.GCE_USER }}/backend/
+      
+      - name: Install dependencies and restart backend
+        run: |
+          ssh ${{ secrets.GCE_USER }}@${{ secrets.GCE_HOST }} << "EOF"
+            cd /home/${{ secrets.GCE_USER }}/backend
+            sudo apt install python3.11-venv -y
+            python3 -m venv venv
+            ./venv/bin/pip install -r requirements.txt
+            echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> ./.env
+            echo "URL=${{ secrets.BACKEND_URL }}" >> ./.env
+            echo "CORS_ORIGINS=${{ secrets.CORS_ORIGINS }}" >> ./.env
+            echo "RAZORPAY_KEY_ID=${{ secrets.RAZORPAY_KEY_ID }}" >> ./.env
+            echo "RAZORPAY_KEY_SECRET=${{ secrets.RAZORPAY_KEY_SECRET }}" >> ./.env
+            echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> ./.env
+            echo "FERMION_API_KEY=${{ secrets.FERMION_API_KEY }}" >> ./.env
+            echo "BREVO_API_KEY=${{ secrets.BREVO_API_KEY }}" >> ./.env
+            echo "MAIL_SENDER_NAME=${{ secrets.MAIL_SENDER_NAME }}" >> ./.env
+            echo "MAIL_SENDER_EMAIL=${{ secrets.MAIL_SENDER_EMAIL }}" >> ./.env
+            echo "OTP_EXPIRY_DURATION_SECONDS=${{ secrets.OTP_EXPIRY_DURATION_SECONDS }}" >> ./.env
+            echo "GOOGLE_APPLICATION_CREDENTIALS=gcs_service_key.json" >> ./.env 
+            echo '${{ secrets.GCS_SERVICE_KEY }}' >> ./gcs_service_key.json
+            echo "GCS_BUCKET_NAME=${{ secrets.GCS_BUCKET_NAME }}" >> ./.env
+            echo "FRONTEND_URL=${{ secrets.FRONTEND_URL }}" >> ./.env
+            ./venv/bin/alembic upgrade head
+            sudo systemctl restart gunicorn.service
+          EOF
+

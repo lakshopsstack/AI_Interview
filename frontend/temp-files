@@ -1,0 +1,12 @@
+src/components/landing2/
+src/components/DashboardSidebar4.tsx
+src/components/DashboardTopbar4.tsx
+src/components/MascotOrb.tsx
+src/pages/Analytics4.tsx
+src/pages/Candidates4.tsx
+src/pages/Dashboard4.tsx
+src/pages/jobs4.tsx
+src/pages/Landing1.tsx
+src/pages/Landing2.tsx
+src/pages/Landing4.tsx
+src/pages/Settings4.tsx

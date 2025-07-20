@@ -1,0 +1,1002 @@
+[
+    {
+        "currency": "AFN",
+        "id": 1
+    },
+    {
+        "currency": "EUR",
+        "id": 2
+    },
+    {
+        "currency": "ALL",
+        "id": 3
+    },
+    {
+        "currency": "DZD",
+        "id": 4
+    },
+    {
+        "currency": "USD",
+        "id": 5
+    },
+    {
+        "currency": "EUR",
+        "id": 6
+    },
+    {
+        "currency": "AOA",
+        "id": 7
+    },
+    {
+        "currency": "XCD",
+        "id": 8
+    },
+    {
+        "currency": "AAD",
+        "id": 9
+    },
+    {
+        "currency": "XCD",
+        "id": 10
+    },
+    {
+        "currency": "ARS",
+        "id": 11
+    },
+    {
+        "currency": "AMD",
+        "id": 12
+    },
+    {
+        "currency": "AWG",
+        "id": 13
+    },
+    {
+        "currency": "AUD",
+        "id": 14
+    },
+    {
+        "currency": "EUR",
+        "id": 15
+    },
+    {
+        "currency": "AZN",
+        "id": 16
+    },
+    {
+        "currency": "BHD",
+        "id": 18
+    },
+    {
+        "currency": "BDT",
+        "id": 19
+    },
+    {
+        "currency": "BBD",
+        "id": 20
+    },
+    {
+        "currency": "BYN",
+        "id": 21
+    },
+    {
+        "currency": "EUR",
+        "id": 22
+    },
+    {
+        "currency": "BZD",
+        "id": 23
+    },
+    {
+        "currency": "XOF",
+        "id": 24
+    },
+    {
+        "currency": "BMD",
+        "id": 25
+    },
+    {
+        "currency": "BTN",
+        "id": 26
+    },
+    {
+        "currency": "BOB",
+        "id": 27
+    },
+    {
+        "currency": "USD",
+        "id": 155
+    },
+    {
+        "currency": "BAM",
+        "id": 28
+    },
+    {
+        "currency": "BWP",
+        "id": 29
+    },
+    {
+        "currency": "NOK",
+        "id": 30
+    },
+    {
+        "currency": "BRL",
+        "id": 31
+    },
+    {
+        "currency": "USD",
+        "id": 32
+    },
+    {
+        "currency": "BND",
+        "id": 33
+    },
+    {
+        "currency": "BGN",
+        "id": 34
+    },
+    {
+        "currency": "XOF",
+        "id": 35
+    },
+    {
+        "currency": "BIF",
+        "id": 36
+    },
+    {
+        "currency": "KHR",
+        "id": 37
+    },
+    {
+        "currency": "XAF",
+        "id": 38
+    },
+    {
+        "currency": "CAD",
+        "id": 39
+    },
+    {
+        "currency": "CVE",
+        "id": 40
+    },
+    {
+        "currency": "KYD",
+        "id": 41
+    },
+    {
+        "currency": "XAF",
+        "id": 42
+    },
+    {
+        "currency": "XAF",
+        "id": 43
+    },
+    {
+        "currency": "CLP",
+        "id": 44
+    },
+    {
+        "currency": "CNY",
+        "id": 45
+    },
+    {
+        "currency": "AUD",
+        "id": 46
+    },
+    {
+        "currency": "AUD",
+        "id": 47
+    },
+    {
+        "currency": "COP",
+        "id": 48
+    },
+    {
+        "currency": "KMF",
+        "id": 49
+    },
+    {
+        "currency": "XAF",
+        "id": 50
+    },
+    {
+        "currency": "NZD",
+        "id": 52
+    },
+    {
+        "currency": "CRC",
+        "id": 53
+    },
+    {
+        "currency": "XOF",
+        "id": 54
+    },
+    {
+        "currency": "EUR",
+        "id": 55
+    },
+    {
+        "currency": "CUP",
+        "id": 56
+    },
+    {
+        "currency": "ANG",
+        "id": 249
+    },
+    {
+        "currency": "EUR",
+        "id": 57
+    },
+    {
+        "currency": "CZK",
+        "id": 58
+    },
+    {
+        "currency": "CDF",
+        "id": 51
+    },
+    {
+        "currency": "DKK",
+        "id": 59
+    },
+    {
+        "currency": "DJF",
+        "id": 60
+    },
+    {
+        "currency": "XCD",
+        "id": 61
+    },
+    {
+        "currency": "DOP",
+        "id": 62
+    },
+    {
+        "currency": "USD",
+        "id": 64
+    },
+    {
+        "currency": "EGP",
+        "id": 65
+    },
+    {
+        "currency": "USD",
+        "id": 66
+    },
+    {
+        "currency": "XAF",
+        "id": 67
+    },
+    {
+        "currency": "ERN",
+        "id": 68
+    },
+    {
+        "currency": "EUR",
+        "id": 69
+    },
+    {
+        "currency": "SZL",
+        "id": 212
+    },
+    {
+        "currency": "ETB",
+        "id": 70
+    },
+    {
+        "currency": "FKP",
+        "id": 71
+    },
+    {
+        "currency": "DKK",
+        "id": 72
+    },
+    {
+        "currency": "FJD",
+        "id": 73
+    },
+    {
+        "currency": "EUR",
+        "id": 74
+    },
+    {
+        "currency": "EUR",
+        "id": 75
+    },
+    {
+        "currency": "EUR",
+        "id": 76
+    },
+    {
+        "currency": "XPF",
+        "id": 77
+    },
+    {
+        "currency": "EUR",
+        "id": 78
+    },
+    {
+        "currency": "XAF",
+        "id": 79
+    },
+    {
+        "currency": "GEL",
+        "id": 81
+    },
+    {
+        "currency": "EUR",
+        "id": 82
+    },
+    {
+        "currency": "GHS",
+        "id": 83
+    },
+    {
+        "currency": "GIP",
+        "id": 84
+    },
+    {
+        "currency": "EUR",
+        "id": 85
+    },
+    {
+        "currency": "DKK",
+        "id": 86
+    },
+    {
+        "currency": "XCD",
+        "id": 87
+    },
+    {
+        "currency": "EUR",
+        "id": 88
+    },
+    {
+        "currency": "USD",
+        "id": 89
+    },
+    {
+        "currency": "GTQ",
+        "id": 90
+    },
+    {
+        "currency": "GBP",
+        "id": 91
+    },
+    {
+        "currency": "GNF",
+        "id": 92
+    },
+    {
+        "currency": "XOF",
+        "id": 93
+    },
+    {
+        "currency": "GYD",
+        "id": 94
+    },
+    {
+        "currency": "HTG",
+        "id": 95
+    },
+    {
+        "currency": "AUD",
+        "id": 96
+    },
+    {
+        "currency": "HNL",
+        "id": 97
+    },
+    {
+        "currency": "HKD",
+        "id": 98
+    },
+    {
+        "currency": "HUF",
+        "id": 99
+    },
+    {
+        "currency": "ISK",
+        "id": 100
+    },
+    {
+        "currency": "INR",
+        "id": 101
+    },
+    {
+        "currency": "IDR",
+        "id": 102
+    },
+    {
+        "currency": "IRR",
+        "id": 103
+    },
+    {
+        "currency": "IQD",
+        "id": 104
+    },
+    {
+        "currency": "EUR",
+        "id": 105
+    },
+    {
+        "currency": "ILS",
+        "id": 106
+    },
+    {
+        "currency": "EUR",
+        "id": 107
+    },
+    {
+        "currency": "JMD",
+        "id": 108
+    },
+    {
+        "currency": "JPY",
+        "id": 109
+    },
+    {
+        "currency": "GBP",
+        "id": 110
+    },
+    {
+        "currency": "JOD",
+        "id": 111
+    },
+    {
+        "currency": "KZT",
+        "id": 112
+    },
+    {
+        "currency": "KES",
+        "id": 113
+    },
+    {
+        "currency": "AUD",
+        "id": 114
+    },
+    {
+        "currency": "EUR",
+        "id": 248
+    },
+    {
+        "currency": "KWD",
+        "id": 117
+    },
+    {
+        "currency": "KGS",
+        "id": 118
+    },
+    {
+        "currency": "LAK",
+        "id": 119
+    },
+    {
+        "currency": "EUR",
+        "id": 120
+    },
+    {
+        "currency": "LBP",
+        "id": 121
+    },
+    {
+        "currency": "LSL",
+        "id": 122
+    },
+    {
+        "currency": "LRD",
+        "id": 123
+    },
+    {
+        "currency": "LYD",
+        "id": 124
+    },
+    {
+        "currency": "CHF",
+        "id": 125
+    },
+    {
+        "currency": "EUR",
+        "id": 126
+    },
+    {
+        "currency": "EUR",
+        "id": 127
+    },
+    {
+        "currency": "MOP",
+        "id": 128
+    },
+    {
+        "currency": "MGA",
+        "id": 130
+    },
+    {
+        "currency": "MWK",
+        "id": 131
+    },
+    {
+        "currency": "MYR",
+        "id": 132
+    },
+    {
+        "currency": "MVR",
+        "id": 133
+    },
+    {
+        "currency": "XOF",
+        "id": 134
+    },
+    {
+        "currency": "EUR",
+        "id": 135
+    },
+    {
+        "currency": "GBP",
+        "id": 136
+    },
+    {
+        "currency": "USD",
+        "id": 137
+    },
+    {
+        "currency": "EUR",
+        "id": 138
+    },
+    {
+        "currency": "MRU",
+        "id": 139
+    },
+    {
+        "currency": "MUR",
+        "id": 140
+    },
+    {
+        "currency": "EUR",
+        "id": 141
+    },
+    {
+        "currency": "MXN",
+        "id": 142
+    },
+    {
+        "currency": "USD",
+        "id": 143
+    },
+    {
+        "currency": "MDL",
+        "id": 144
+    },
+    {
+        "currency": "EUR",
+        "id": 145
+    },
+    {
+        "currency": "MNT",
+        "id": 146
+    },
+    {
+        "currency": "EUR",
+        "id": 147
+    },
+    {
+        "currency": "XCD",
+        "id": 148
+    },
+    {
+        "currency": "MAD",
+        "id": 149
+    },
+    {
+        "currency": "MZN",
+        "id": 150
+    },
+    {
+        "currency": "MMK",
+        "id": 151
+    },
+    {
+        "currency": "NAD",
+        "id": 152
+    },
+    {
+        "currency": "AUD",
+        "id": 153
+    },
+    {
+        "currency": "NPR",
+        "id": 154
+    },
+    {
+        "currency": "EUR",
+        "id": 156
+    },
+    {
+        "currency": "XPF",
+        "id": 157
+    },
+    {
+        "currency": "NZD",
+        "id": 158
+    },
+    {
+        "currency": "NIO",
+        "id": 159
+    },
+    {
+        "currency": "XOF",
+        "id": 160
+    },
+    {
+        "currency": "NGN",
+        "id": 161
+    },
+    {
+        "currency": "NZD",
+        "id": 162
+    },
+    {
+        "currency": "AUD",
+        "id": 163
+    },
+    {
+        "currency": "KPW",
+        "id": 115
+    },
+    {
+        "currency": "MKD",
+        "id": 129
+    },
+    {
+        "currency": "USD",
+        "id": 164
+    },
+    {
+        "currency": "NOK",
+        "id": 165
+    },
+    {
+        "currency": "OMR",
+        "id": 166
+    },
+    {
+        "currency": "PKR",
+        "id": 167
+    },
+    {
+        "currency": "USD",
+        "id": 168
+    },
+    {
+        "currency": "ILS",
+        "id": 169
+    },
+    {
+        "currency": "PAB",
+        "id": 170
+    },
+    {
+        "currency": "PGK",
+        "id": 171
+    },
+    {
+        "currency": "PYG",
+        "id": 172
+    },
+    {
+        "currency": "PEN",
+        "id": 173
+    },
+    {
+        "currency": "PHP",
+        "id": 174
+    },
+    {
+        "currency": "NZD",
+        "id": 175
+    },
+    {
+        "currency": "PLN",
+        "id": 176
+    },
+    {
+        "currency": "EUR",
+        "id": 177
+    },
+    {
+        "currency": "USD",
+        "id": 178
+    },
+    {
+        "currency": "QAR",
+        "id": 179
+    },
+    {
+        "currency": "EUR",
+        "id": 180
+    },
+    {
+        "currency": "RON",
+        "id": 181
+    },
+    {
+        "currency": "RUB",
+        "id": 182
+    },
+    {
+        "currency": "RWF",
+        "id": 183
+    },
+    {
+        "currency": "SHP",
+        "id": 184
+    },
+    {
+        "currency": "XCD",
+        "id": 185
+    },
+    {
+        "currency": "XCD",
+        "id": 186
+    },
+    {
+        "currency": "EUR",
+        "id": 187
+    },
+    {
+        "currency": "XCD",
+        "id": 188
+    },
+    {
+        "currency": "EUR",
+        "id": 189
+    },
+    {
+        "currency": "EUR",
+        "id": 190
+    },
+    {
+        "currency": "WST",
+        "id": 191
+    },
+    {
+        "currency": "EUR",
+        "id": 192
+    },
+    {
+        "currency": "STN",
+        "id": 193
+    },
+    {
+        "currency": "SAR",
+        "id": 194
+    },
+    {
+        "currency": "XOF",
+        "id": 195
+    },
+    {
+        "currency": "RSD",
+        "id": 196
+    },
+    {
+        "currency": "SCR",
+        "id": 197
+    },
+    {
+        "currency": "SLL",
+        "id": 198
+    },
+    {
+        "currency": "SGD",
+        "id": 199
+    },
+    {
+        "currency": "ANG",
+        "id": 250
+    },
+    {
+        "currency": "EUR",
+        "id": 200
+    },
+    {
+        "currency": "EUR",
+        "id": 201
+    },
+    {
+        "currency": "SBD",
+        "id": 202
+    },
+    {
+        "currency": "SOS",
+        "id": 203
+    },
+    {
+        "currency": "ZAR",
+        "id": 204
+    },
+    {
+        "currency": "GBP",
+        "id": 205
+    },
+    {
+        "currency": "KRW",
+        "id": 116
+    },
+    {
+        "currency": "SSP",
+        "id": 206
+    },
+    {
+        "currency": "EUR",
+        "id": 207
+    },
+    {
+        "currency": "LKR",
+        "id": 208
+    },
+    {
+        "currency": "SDG",
+        "id": 209
+    },
+    {
+        "currency": "SRD",
+        "id": 210
+    },
+    {
+        "currency": "NOK",
+        "id": 211
+    },
+    {
+        "currency": "SEK",
+        "id": 213
+    },
+    {
+        "currency": "CHF",
+        "id": 214
+    },
+    {
+        "currency": "SYP",
+        "id": 215
+    },
+    {
+        "currency": "TWD",
+        "id": 216
+    },
+    {
+        "currency": "TJS",
+        "id": 217
+    },
+    {
+        "currency": "TZS",
+        "id": 218
+    },
+    {
+        "currency": "THB",
+        "id": 219
+    },
+    {
+        "currency": "BSD",
+        "id": 17
+    },
+    {
+        "currency": "GMD",
+        "id": 80
+    },
+    {
+        "currency": "USD",
+        "id": 63
+    },
+    {
+        "currency": "XOF",
+        "id": 220
+    },
+    {
+        "currency": "NZD",
+        "id": 221
+    },
+    {
+        "currency": "TOP",
+        "id": 222
+    },
+    {
+        "currency": "TTD",
+        "id": 223
+    },
+    {
+        "currency": "TND",
+        "id": 224
+    },
+    {
+        "currency": "TRY",
+        "id": 225
+    },
+    {
+        "currency": "TMT",
+        "id": 226
+    },
+    {
+        "currency": "USD",
+        "id": 227
+    },
+    {
+        "currency": "AUD",
+        "id": 228
+    },
+    {
+        "currency": "UGX",
+        "id": 229
+    },
+    {
+        "currency": "UAH",
+        "id": 230
+    },
+    {
+        "currency": "AED",
+        "id": 231
+    },
+    {
+        "currency": "GBP",
+        "id": 232
+    },
+    {
+        "currency": "USD",
+        "id": 233
+    },
+    {
+        "currency": "USD",
+        "id": 234
+    },
+    {
+        "currency": "UYU",
+        "id": 235
+    },
+    {
+        "currency": "UZS",
+        "id": 236
+    },
+    {
+        "currency": "VUV",
+        "id": 237
+    },
+    {
+        "currency": "EUR",
+        "id": 238
+    },
+    {
+        "currency": "VES",
+        "id": 239
+    },
+    {
+        "currency": "VND",
+        "id": 240
+    },
+    {
+        "currency": "USD",
+        "id": 241
+    },
+    {
+        "currency": "USD",
+        "id": 242
+    },
+    {
+        "currency": "XPF",
+        "id": 243
+    },
+    {
+        "currency": "MAD",
+        "id": 244
+    },
+    {
+        "currency": "YER",
+        "id": 245
+    },
+    {
+        "currency": "ZMW",
+        "id": 246
+    },
+    {
+        "currency": "ZWL",
+        "id": 247
+    }
+]

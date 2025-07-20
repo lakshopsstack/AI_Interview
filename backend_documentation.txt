@@ -1,0 +1,276 @@
+AI INTERVIEWER BACKEND DOCUMENTATION
+===================================
+
+# Welcome to the Backend! 🧠🔧
+
+You’ve entered the engine room of the AI Interviewer. Here, logic reigns, data flows, and the occasional bug lurks in the shadows. This doc is your friendly, slightly cheeky guide to the backend. If you’re new, don’t worry—everyone’s dropped a production database at least once (just kidding, please don’t).
+
+## Table of Contents
+1. Project Structure (Where the Sausage Gets Made)
+2. Entry Point (How the Magic Starts)
+3. Configuration (The Secret Sauce)
+4. Database (Where the Data Sleeps)
+5. Models (ORM: Objectively Really Marvelous)
+6. Schemas (Pydantic: Because Validation is Love)
+7. Exception Handling (How Not to Panic)
+8. Main Application Modules (The Brains of the Operation)
+9. Services (Helpers, but Fancier)
+10. Utilities (lib) (The Swiss Army Knife)
+11. Middlewares (The Bouncers)
+12. Requirements (The Shopping List)
+13. Pro Tips & Gotchas
+
+---
+
+# 1. Project Structure (Where the Sausage Gets Made)
+
+- `backend/` — The root of backend wizardry.
+  - `app/` — The main application source code.
+    - `main.py` — The entry point. If this file is missing, you’re in the wrong repo.
+    - `models.py` — SQLAlchemy ORM models. All your tables, all your relationships, all your hopes and dreams.
+    - `schemas.py` — Pydantic schemas for request/response validation. Because trusting user input is for amateurs.
+    - `database.py` — Database connection and session management. (If you see a connection error, start here.)
+    - `config.py` — Configuration management. All your secrets in one place (but not in version control, please).
+    - `exception_handlers.py` — Custom exception handlers. For when things go sideways (and they will).
+    - `routes/` — Admin and public route definitions. Where the endpoints live.
+    - `company/` — Company domain logic (router, schemas, services). For all things corporate.
+    - `job_seeker/` — Job seeker domain logic (router, schemas, services). For the people.
+    - `interview/` — Interview domain logic (router, schemas, services). Where the AI magic happens.
+    - `services/` — Shared service modules (email, GCS, interview logic, etc.).
+    - `lib/` — Utility libraries (JWT, security, errors). The unsung heroes.
+    - `configs/` — Third-party and API configs (OpenAI, Razorpay, Brevo). Because we love APIs.
+    - `dependencies/` — Dependency injection modules. (No, not the medical kind.)
+    - `middlewares/` — Middleware logic. (The bouncers of your API.)
+    - `public/` — Public endpoints. For the world to see.
+  - `requirements.txt` — Python dependencies. (Don’t forget to `pip install`!)
+  - `alembic/` — Database migrations. (For when you need to change the schema and pray nothing breaks.)
+  - `uploads/` — Uploaded files. (No cat pictures, please.)
+
+---
+
+# 2. Entry Point (How the Magic Starts)
+
+## `main.py`
+- FastAPI application setup. (If you see nothing in the browser, check here.)
+- Configures CORS, static files, and exception handlers. (So your frontend can talk to your backend without drama.)
+- Includes routers for public, company, interview, job seeker, and admin APIs. (So many endpoints, so little time.)
+- Health check endpoint (`/api/v1`). (If this says "healthy," you’re halfway there.)
+- Startup event to create a default admin user if not present. (Because someone has to be in charge.)
+- Runs with Uvicorn if executed directly. (The server with the coolest name.)
+
+---
+
+# 3. Configuration (The Secret Sauce)
+
+## `config.py`
+- Loads environment variables using `dotenv`. (If you see `NoneType` errors, check your `.env`.)
+- Defines the `Settings` class for all configuration (DB, CORS, API keys, etc.).
+- Exposes a singleton `settings` instance. (One config to rule them all.)
+
+---
+
+# 4. Database (Where the Data Sleeps)
+
+## `database.py`
+- Sets up SQLAlchemy engine and session. (If you see "connection refused," check your DB is running.)
+- Provides `Base` for ORM models. (All models inherit from this. It’s the law.)
+- `get_db()` yields a database session for dependency injection. (Don’t forget to close your sessions!)
+
+---
+
+# 5. Models (ORM: Objectively Really Marvelous)
+
+## `models.py`
+- Defines all SQLAlchemy ORM models for the application:
+  - `Company`, `JobSeeker`, `HSCEducation`, `SSCEducation`, `HigherEducation`, `Internship`, `Project`, `Certification`, `ClubAndCommittee`, `CompetitiveExam`, `EmploymentDetail`, `AcademicAchievement`, `Job`, `JobApplication`, `AiInterviewedJob`, `InterviewQuestion`, `InterviewQuestionResponse`, `QuizQuestion`, `QuizOption`, `DSAQuestion`, `DSATestCase`, `Interview`, `InterviewQuestionAndResponse`, `DSAResponse`, `DSATestCaseResponse`, `QuizResponse`, `Country`, `State`, `City`, `AdminUser`, `DSAPoolQuestion`, `DSAPoolTestCase`, `EduDiagnoTest`, `EduDiagnoMCQQuestion`, `EduDiagnoDSAQuestion`, `EduDiagnoDSATestCase`, `EduDiagnoVideoQuestion`, `EduDiagnoAttempt`.
+- Each model includes fields, relationships, and admin/metadata fields. (If you see a foreign key error, check your relationships.)
+- Pro tip: If you’re lost, start with `Company` and work your way down.
+
+---
+
+# 6. Schemas (Pydantic: Because Validation is Love)
+
+## `schemas.py`
+- Defines all Pydantic schemas for request/response validation. (No more trusting user input. Ever.)
+- Includes schemas for recruiter, AI interview, interview questions, DSA, quiz, job application, EduDiagno tests, and more.
+- Used for input validation and API documentation. (If your API docs look weird, check your schemas.)
+
+---
+
+# 7. Exception Handling (How Not to Panic)
+
+## `exception_handlers.py`
+- Custom exception handlers for SQLAlchemy errors, custom exceptions, and global errors. (So your users see friendly messages instead of stack traces.)
+- Returns appropriate JSON responses for unique constraint violations, missing resources, and other errors. (If you see a 500, check here before blaming the database.)
+
+---
+
+# 8. Main Application Modules (The Brains of the Operation)
+
+## `routes/`
+- `admin.py` — All admin-related API endpoints (user, company, job, interview, DSA pool, EduDiagno management, etc.).
+- `public/` — Publicly accessible endpoints. (For the world, or at least the unauthenticated.)
+
+## `company/`
+- `router.py` — Company-specific API endpoints (job posting, profile, analytics, etc.).
+- `schemas.py` — Pydantic schemas for company domain.
+- `services.py` — Business logic for company operations.
+
+## `job_seeker/`
+- `router.py` — Job seeker-specific API endpoints (profile, applications, etc.).
+- `schemas.py` — Pydantic schemas for job seeker domain.
+- `services.py` — Business logic for job seeker operations.
+- `dependencies.py` — Dependency injection for job seeker routes.
+
+## `interview/`
+- `router.py` — Interview-specific API endpoints (interview flow, questions, feedback, etc.).
+- `schemas.py` — Pydantic schemas for interview domain.
+- `services.py` — Business logic for interview operations.
+
+---
+
+# 9. Services (Helpers, but Fancier)
+
+## `services/`
+- `brevo.py` — Email sending logic using Brevo API. (Because everyone loves email. Right?)
+- `gcs.py` — Google Cloud Storage integration for file uploads. (For when you need to store resumes in the cloud.)
+- `interview_question.py` — Logic for managing interview questions. (So the AI can grill candidates.)
+- `interview_question_response.py` — Logic for managing interview question responses. (So you can see who said what.)
+- `__init__.py` — Service module init. (Not much to see here.)
+
+---
+
+# 10. Utilities (lib) (The Swiss Army Knife)
+
+## `lib/`
+- `errors.py` — Custom exception classes. (For when you want to throw a tantrum, but in code.)
+- `jwt.py` — JWT token creation and validation. (Because sessions are so last decade.)
+- `security.py` — Password hashing and security utilities. (Don’t store passwords in plain text. Ever.)
+
+---
+
+# 11. Middlewares (The Bouncers)
+
+## `middlewares/`
+- Custom middleware logic (if any, currently only `__init__.py`). (If you want to add logging, this is your spot.)
+
+---
+
+# 12. Requirements (The Shopping List)
+
+## `requirements.txt`
+- Lists all Python dependencies (FastAPI, SQLAlchemy, Uvicorn, Alembic, OpenAI, Razorpay, Brevo, Google Cloud Storage, etc.).
+- Pro tip: If you get a `ModuleNotFoundError`, check this file. Or just run `pip install` again for good luck.
+
+---
+
+# 13. Pro Tips & Gotchas
+- The backend is built with FastAPI for high performance and async support. (It’s fast. Like, really fast.)
+- Uses SQLAlchemy ORM for database modeling. (So you can write Python instead of SQL. Mostly.)
+- Pydantic is used for data validation and serialization. (No more trusting user input. Ever.)
+- Modular structure for scalability and maintainability. (So you can add features without losing your mind.)
+- All business logic is separated into services and routers. (Because spaghetti code belongs in the kitchen.)
+- Configuration is environment-driven for flexibility. (Check your `.env` before you panic.)
+- Exception handling is robust and user-friendly. (Your users will thank you. Or at least not yell at you.)
+- If all else fails, ask a teammate, check the docs, or just take a break. (Seriously, breaks are important.)
+
+---
+
+# 14. Common Errors, HTTP Status Codes & Solutions
+
+## HTTP Status Codes You’ll Encounter (and How to Fix Them)
+
+- **200 OK**: Success! (Enjoy it, you earned it.)
+- **201 Created**: Resource created. (POST/PUT worked.)
+- **204 No Content**: Success, but nothing to return. (DELETE or update with no response.)
+- **400 Bad Request**: The client sent something invalid.
+  - *Solution*: Check your request body, query params, and required fields. Use FastAPI’s `/docs` to test requests.
+- **401 Unauthorized**: No or invalid auth token.
+  - *Solution*: Make sure you’re sending the correct Authorization header. Check token expiry.
+- **403 Forbidden**: You’re authenticated, but not allowed to do this.
+  - *Solution*: Check user roles and permissions. Update access control logic if needed.
+- **404 Not Found**: The endpoint or resource doesn’t exist.
+  - *Solution*: Double-check your route, endpoint, and spelling. Use FastAPI’s `/docs` to see available endpoints.
+- **409 Conflict**: Resource already exists (e.g., duplicate email).
+  - *Solution*: Check for unique constraints. Handle errors gracefully in the API and frontend.
+- **422 Unprocessable Entity**: Validation failed (usually from Pydantic).
+  - *Solution*: Check your request data, required fields, and types. FastAPI will tell you what’s wrong in the response.
+- **429 Too Many Requests**: Rate limit exceeded.
+  - *Solution*: Implement throttling, debouncing, or backoff. Or just wait a bit.
+- **500 Internal Server Error**: Something broke on the backend.
+  - *Solution*: Check backend logs, stack traces, and error handlers. Debug with print/log statements. If you’re stuck, ask for help.
+- **502/503/504 Gateway/Service Errors**: Server is down or overloaded.
+  - *Solution*: Check server status, restart services, or wait. If persistent, escalate to the team.
+
+## Example Error Handling in FastAPI
+
+```python
+from fastapi import HTTPException
+
+@app.get("/api/v1/resource")
+def get_resource():
+    try:
+        # your logic here
+        return {"data": "success"}
+    except SomeSpecificError:
+        raise HTTPException(status_code=400, detail="Bad request: ...")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+```
+
+## Debugging Checklist
+- Use FastAPI’s `/docs` to test endpoints and see error responses.
+- Check backend logs for stack traces and error messages.
+- Use print/log statements to trace logic.
+- Validate request/response schemas with Pydantic.
+- If you see a database error, check your models and migrations.
+- If all else fails, ask a teammate or escalate in the team chat.
+
+---
+
+# 15. Advanced Debugging & Extending the Backend
+
+## How to Add a New Endpoint
+1. Add a function in the appropriate router (e.g., `app/routes/` or `app/company/router.py`).
+2. Use FastAPI decorators (`@app.get`, `@app.post`, etc.).
+3. Define request/response schemas in `schemas.py`.
+4. Add business logic and error handling.
+5. Test with FastAPI’s `/docs` and pytest.
+
+## How to Add a New Model
+1. Define a new class in `models.py` (inherit from `Base`).
+2. Add fields, relationships, and constraints.
+3. Create a migration with Alembic:
+   ```bash
+   alembic revision --autogenerate -m "Add MyModel"
+   alembic upgrade head
+   ```
+4. Add corresponding Pydantic schemas in `schemas.py`.
+5. Update routers/services as needed.
+
+## How to Debug Database Issues
+- Check your connection string in `.env`.
+- Use SQLAlchemy’s echo/logging for SQL queries.
+- Check Alembic migration history and scripts.
+- If you see integrity errors, check your relationships and constraints.
+
+---
+
+# 16. More Pro Tips & Gotchas
+- Always return meaningful error messages in the API.
+- Use status codes consistently.
+- Validate all input with Pydantic.
+- Write tests for error cases, not just happy paths.
+- If you’re stuck, take a break or ask for help—no shame!
+
+---
+
+# You’ve Reached the Boss Level!
+
+If you’ve read this entire documentation, you’re not just a dev—you’re a backend boss, a stack wrangler, and the real MVP of this repo. You’ve debugged deeper than most people dig for memes.
+
+If you have any doubts or need help with the code, feel free to contact me on Instagram: **@shreyeahhs**
+
+Thanks for caring about quality code and good docs. May your queries be fast and your exceptions always handled!
+
+# End of Backend Documentation 

@@ -1,0 +1,22 @@
+export type Job = {
+  id?: number;
+  company_id?: number;
+  job_title?: string;
+  job_role?: string;
+  job_location?: string;
+  job_locality?: string;
+  work_mode?: string;
+  min_work_experience?: number;
+  max_work_experience?: number;
+  min_salary_per_month?: number;
+  max_salary_per_month?: number;
+  additional_benefits?: string;
+  skills?: string;
+  qualification?: string;
+  gender_preference?: string;
+  candidate_prev_industry?: string;
+  languages?: string;
+  education_degree?: string;
+  job_description?: string;
+  posted_at?: string;
+};

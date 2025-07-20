@@ -1,0 +1,320 @@
+AI INTERVIEWER FRONTEND DOCUMENTATION
+====================================
+
+# Welcome to the Frontend! 🖥️✨
+
+Congratulations, you’ve found the beating heart of the user experience. This is where pixels meet 
+purpose, and where bugs occasionally meet their doom (or, you know, get ignored until the next sprint). 
+This doc is your friendly, slightly sarcastic guide to everything in the frontend. If you’re new, don’t 
+worry—we’ve all broken the build at least once.
+
+## Table of Contents
+1. Project Structure (aka, Where Stuff Lives)
+2. Entry Points (How It All Starts)
+3. Context Providers (Global State, Global Headaches)
+4. Hooks (React Magic Tricks)
+5. Services (API Calls, aka "Why Isn’t This Working?")
+6. Types (TypeScript: Because We Like Safety Nets)
+7. Utilities (Helper Functions for Lazy Devs)
+8. Components (The Lego Bricks)
+9. Pages (The Big Picture)
+10. Styles and Configuration (Making It Pretty)
+11. Project Metadata (The Boring but Important Bits)
+12. Pro Tips & Gotchas
+
+---
+
+# 1. Project Structure (aka, Where Stuff Lives)
+
+- `frontend/` — The root of all frontend glory.
+  - `src/` — The real action happens here.
+    - `components/` — All reusable UI and domain components. If you’re copy-pasting code, you’re probably missing a component here.
+    - `context/` — React context providers for global state. (Yes, you’ll need these for auth and theming.)
+    - `hooks/` — Custom React hooks. If you see a `use-` prefix, it probably lives here.
+    - `lib/` — Utility functions. For when you don’t want to write the same code twice.
+    - `pages/` — Page-level components. Each route gets its own file. Like a choose-your-own-adventure, but with more JSX.
+    - `services/` — API service modules. All the async/await you can handle.
+    - `types/` — TypeScript type definitions. Because `any` is for quitters.
+    - `index.css` — Main CSS file (Tailwind-powered, so you can look cool with utility classes).
+    - `main.tsx` — The entry point. If this file is missing, you’re in the Upside Down.
+    - `App.tsx` — The main app component and router. All roads lead here.
+    - `config.tsx` — Configuration constants. Change these and hope for the best.
+    - `vite-env.d.ts` — Vite environment types. (You’ll probably never touch this.)
+  - `public/` — Static assets. Put your favicons and robots.txt here.
+  - `package.json` — Project metadata and dependencies. Also, where you’ll add that one package you swear you’ll remove later.
+  - `tsconfig*.json` — TypeScript config. Don’t mess with this unless you know what you’re doing (or you’re feeling lucky).
+  - `vite.config.ts` — Vite build config. For the speed demons.
+  - `tailwind.config.ts` — Tailwind CSS config. Where the color magic happens.
+
+---
+
+# 2. Entry Points (How It All Starts)
+
+## `main.tsx`
+- Bootstraps the React app. If this file is missing, you’re in the Upside Down.
+- Wraps the app in `BrowserRouter`, `AppContextProvider`, `ThemeProvider`, and `TooltipProvider`.
+- Renders the `App` component. (No App, no party.)
+
+## `App.tsx`
+- The main application component. The traffic cop of your SPA.
+- Defines all routes using `react-router-dom`. If you get a 404, blame your route here.
+- Handles route protection for job seekers, companies, and admin. (No sneaky business.)
+- Imports all page components and authentication wrappers. (So many imports, so little time.)
+
+---
+
+# 3. Context Providers (Global State, Global Headaches)
+
+## `context/AppContext.tsx`
+- Provides global state for authentication and user data (company and job seeker).
+- Functions:
+  - `companyLogin`, `companyLogout`, `companyVerifyLogin` — Company auth. (Because companies need love too.)
+  - `jobSeekerLogin`, `jobSeekerLogout`, `jobSeekerVerifyLogin` — Job seeker auth. (For the people.)
+  - `updateJobSeeker` — Update job seeker profile. (Because everyone deserves a second chance.)
+- Exposes `company` and `jobSeeker` objects. (Check these before you panic about missing data.)
+
+## `context/ThemeContext.tsx`
+- Manages theme (light/dark/system) for the app. Because dark mode is a human right. If you prefer using light mode, please get checked, you weirdo.
+- Persists theme in localStorage. (So your eyes don’t get burned every refresh.)
+- Listens for system theme changes. (For the truly indecisive.)
+- Provides `theme` and `setTheme` via context. (Toggle away!)
+
+---
+
+# 4. Hooks (React Magic Tricks)
+
+## `hooks/use-toast.ts`
+- Custom hook for toast notifications. (Because users love pop-ups, right?)
+- Provides `toast` function to show notifications, and `dismiss` to close them.
+- Manages toast state and queue. (No more than one at a time, because we’re not monsters.)
+
+## `hooks/use-mobile.tsx`
+- Used to detect mobile devices or viewport. (So you can hide that sidebar on iPhones.)
+
+---
+
+# 5. Services (API Calls, aka "Why Isn’t This Working?")
+
+## `services/jobSeekerApi.ts`
+- Handles all API calls for job seeker registration, login, profile, jobs, companies, resume upload, etc.
+- Functions:
+  - `register`, `login`, `verifyLogin`, `update`, `uploadResume`, `uploadProfilePicture`, `listJobs`, `getJob`, `applyToJob`, `listCompanies`, `getCompanyById`, `getAppliedJobs`, `getProfileCompletion`, `getEduDiagnoScore`, etc.
+- Pro tip: If you get a 401, check your tokens. If you get a 500, blame the backend.
+
+## `services/companyApi.ts`
+- Handles all API calls for company registration, login, job management, DSA questions, interview questions, analytics, etc.
+- Functions:
+  - `register`, `login`, `verifyLogin`, `getAnaltyics`, `createDSAQuestion`, `updateDSAQuestion`, `getDSAQuestion`, `deleteDSAQuestion`, `createTestCase`, `deleteTestCase`, `createCustomInterviewQuestion`, `getCustomInterviewQuestionByJobId`, `createAiInterviewedJob`, `getAllAiInterviewedJobs`, `getAiInterviewedJobsPaginated`, `getAiInterviewedJobById`, `updateAiInterviewedJob`, etc.
+- Pro tip: If you see "undefined" in your UI, check your API responses. Or just blame the backend again.
+
+## `services/interviewApi.ts`
+- Handles all API calls related to interviews, candidate analysis, resume upload, feedback, question generation, etc.
+- Functions:
+  - `createInterview`, `getInterviews`, `candidateGetInterview`, `updateInterview`, `extractResumeData`, `uploadResume`, `analyzeCandidate`, `textToSpeech`, `speechToText`, `submitTextResponse`, `generateFeedback`, `generateQuestions`, `getAiInterviewedJob`, `submitQuizResponses`, `getDSAQuestion`, etc.
+- Pro tip: If the AI says something weird, just call it "machine learning" and move on.
+
+## `services/adminApi.ts`
+- Handles all admin API calls for managing job seekers, companies, jobs, interviews, DSA pool, EduDiagno tests, etc.
+- Functions:
+  - `login`, `getJobSeekers`, `suspendJobSeeker`, `verifyJobSeeker`, `getCompanies`, `suspendCompany`, `verifyCompany`, `updateCompany`, `deleteCompany`, `getJobs`, `approveJob`, `closeJob`, `featureJob`, `updateJob`, `deleteJob`, `getAiInterviewedJobs`, `approveAiInterviewedJob`, `closeAiInterviewedJob`, `featureAiInterviewedJob`, `updateAiInterviewedJob`, `deleteAiInterviewedJob`, `getInterviews`, `flagInterview`, `updateInterview`, `deleteInterview`, `getJobSeeker`, `getJobSeekerApplications`, `getJobSeekerInterviews`, `getDSAPoolQuestions`, `createDSAPoolQuestion`, `updateDSAPoolQuestion`, `deleteDSAPoolQuestion`, `getEduDiagnoTests`, `createEduDiagnoTest`, `updateEduDiagnoTest`, `deleteEduDiagnoTest`, etc.
+- Pro tip: If you’re not an admin, don’t touch this. (Or do, but don’t tell anyone.)
+
+## `services/autoCompletionApi.ts`
+- Provides city auto-completion for forms. Because nobody likes typing out "San Francisco".
+- Function: `fetchCities(searchTerm)`
+
+---
+
+# 6. Types (TypeScript: Because We Like Safety Nets)
+
+- All type definitions are in `src/types/`.
+- Major types:
+  - `jobSeeker.ts` — Job seeker profile, education, experience, etc.
+  - `company.ts` — Company profile, registration, login, public data.
+  - `interview.ts` — Interview data, parameters, responses, scores.
+  - `aiInterviewedJob.ts` — AI Interviewed Job, DSA questions, MCQ, interview questions, etc.
+  - `job.ts` — Job posting details.
+- Pro tip: If you see a red squiggly, check your types. Or just cast to `any` and hope for the best (not recommended).
+
+---
+
+# 7. Utilities (Helper Functions for Lazy Devs)
+
+## `lib/utils.ts`
+- `cn(...inputs)` — Utility to merge Tailwind and class names using `clsx` and `tailwind-merge`. Because writing `className={...}` by hand is so 2020.
+
+---
+
+# 8. Components (The Lego Bricks)
+
+- All UI and domain components are in `src/components/`.
+- Subfolders:
+  - `ui/` — Generic UI components (dropdown, form, input, menubar, sidebar, table, toast, etc.).
+  - `jobseeker/` — Modals and widgets for job seeker profile editing.
+  - `company/` — Company profile, document upload, question editor, etc.
+  - `interview/` — Interview widgets (camera, candidate check, response processor, etc.).
+  - `jobs/` — Job-related components.
+  - `auth/` — Authentication guards and wrappers.
+  - `common/` — Shared components (DsaQuestion, LoadingSpinner, ThemeToggle, VideoJs, etc.).
+  - `layout/` — Layout components for different user roles.
+
+Each component is a React functional component, often with props for customization. Many UI components are built on top of Radix UI primitives and styled with Tailwind CSS. If you break a component, just blame the props.
+
+---
+
+# 9. Pages (The Big Picture)
+
+- All routed pages are in `src/pages/`.
+- Subfolders for each major domain (Interview, JobSeeker, Company, Dashboard, Admin).
+- Each page is a React component, often using context, services, and components.
+- Example pages: `Landing.tsx`, `Features.tsx`, `Contact.tsx`, `Privacy.tsx`, `Careers.tsx`, `Integrations.tsx`, `Changelog.tsx`, `HowItWorks.tsx`, `AdminDashboard.tsx`, `AdminDSAPool.tsx`, `AdminEduDiagnoTestQuestions.tsx`, `AdminEduDiagnoTests.tsx`, etc.
+- Pro tip: If you can’t find a page, check your import paths. Or just use the search bar.
+
+---
+
+# 10. Styles and Configuration (Making It Pretty)
+
+## `index.css`
+- Main CSS file using Tailwind CSS. Defines color variables, base styles, utility classes, and custom animations. (Because who doesn’t love a good fade-in?)
+
+## `tailwind.config.ts`
+- Tailwind CSS configuration (theme, plugins, etc.).
+
+## `vite.config.ts`
+- Vite build configuration. (For when you want your builds to be fast and your errors to be mysterious.)
+
+## `config.tsx`
+- Exports API and WebSocket base URLs from environment variables. (Change with caution.)
+
+---
+
+# 11. Project Metadata (The Boring but Important Bits)
+
+## `package.json`
+- Lists all dependencies (React, Radix UI, Tailwind, Axios, etc.), scripts, and project metadata. Also, where you’ll find that one package nobody remembers adding.
+
+## `tsconfig*.json`
+- TypeScript configuration for app, node, and base. (If you break this, you buy it.)
+
+---
+
+# 12. Pro Tips & Gotchas
+- The codebase is modular, with clear separation of concerns. (Mostly.)
+- Uses modern React (hooks, context, functional components). No class components here, thank you very much.
+- TypeScript is used throughout for type safety. (And to make your life easier. Or harder. Depends on the day.)
+- Tailwind CSS is used for styling. (Because writing CSS from scratch is for masochists.)
+- Routing is handled by `react-router-dom`. (Don’t forget your `<Routes>`!)
+- API calls are abstracted in service modules. (So you can blame the backend in one place.)
+- All user roles (job seeker, company, admin) are supported with dedicated pages and components. (No favoritism.)
+- If all else fails, ask a teammate, check the docs, or just take a break. (We recommend the last one.)
+
+---
+
+# 13. Common Errors, HTTP Status Codes & Solutions
+
+## HTTP Status Codes You’ll Meet (and How to Befriend Them)
+
+- **200 OK**: Everything’s fine! (Enjoy it while it lasts.)
+- **201 Created**: Your POST worked. Something new exists now.
+- **204 No Content**: Success, but nothing to show for it. (Usually after a DELETE.)
+- **400 Bad Request**: You sent something weird. Check your request body, params, or types.
+  - *Solution*: Double-check your form data, required fields, and API docs. Use browser dev tools to inspect the request payload.
+- **401 Unauthorized**: You’re not logged in, or your token is missing/expired.
+  - *Solution*: Log in again, check your token in localStorage, and make sure it’s sent in the Authorization header.
+- **403 Forbidden**: You’re logged in, but you’re not allowed to do this.
+  - *Solution*: Check your user role, permissions, and the backend’s access control logic.
+- **404 Not Found**: The thing you’re looking for doesn’t exist (or the route is wrong).
+  - *Solution*: Check your route, API endpoint, and spelling. If it’s a page, check your React Router config.
+- **409 Conflict**: You tried to create something that already exists (like a duplicate email).
+  - *Solution*: Check for unique constraints, and handle errors gracefully in the UI.
+- **422 Unprocessable Entity**: Validation failed (usually from the backend).
+  - *Solution*: Check your form validation, required fields, and data types. The backend will usually tell you what’s wrong in the response.
+- **429 Too Many Requests**: Slow down! You’re making too many requests.
+  - *Solution*: Implement debouncing, throttling, or just take a coffee break.
+- **500 Internal Server Error**: Something broke on the backend. (It’s not your fault. Probably.)
+  - *Solution*: Check backend logs, API docs, and ask a backend dev for help. Try again later.
+- **502/503/504 Gateway/Service Errors**: The server is down or overloaded.
+  - *Solution*: Wait, retry, or check server status. If it keeps happening, alert the team.
+
+## Example Error Handling in the Frontend
+
+```js
+try {
+  const res = await axios.get('/api/v1/jobseeker/profile', { headers: { Authorization: `Bearer ${token}` } });
+  // handle success
+} catch (err) {
+  if (err.response) {
+    switch (err.response.status) {
+      case 400:
+        alert('Bad request! Check your input.');
+        break;
+      case 401:
+        alert('Session expired. Please log in again.');
+        // redirect to login
+        break;
+      case 404:
+        alert('Not found!');
+        break;
+      case 500:
+        alert('Server error. Try again later.');
+        break;
+      default:
+        alert('Something went wrong!');
+    }
+  } else {
+    alert('Network error or server is down.');
+  }
+}
+```
+
+## Debugging Checklist
+- Use browser dev tools (Network tab) to inspect requests and responses.
+- Check the console for error messages and stack traces.
+- Use React DevTools to inspect component state and props.
+- If you see a red squiggly, check your TypeScript types.
+- If all else fails, ask a teammate or check the backend logs.
+
+---
+
+# 14. Advanced Debugging & Extending the Frontend
+
+## How to Add a New Page
+1. Create a new file in `src/pages/` (e.g., `MyNewPage.tsx`).
+2. Add a route in `App.tsx` using React Router.
+3. Build your UI using components from `src/components/`.
+4. Add API calls using services from `src/services/`.
+5. Add types as needed in `src/types/`.
+6. Test, commit, and push!
+
+## How to Add a New API Call
+1. Add a function in the appropriate service file in `src/services/`.
+2. Use Axios or Fetch to call the backend endpoint.
+3. Update types in `src/types/` if needed.
+4. Handle errors using the patterns above.
+
+## How to Debug Styling Issues
+- Use browser dev tools to inspect CSS classes.
+- Check Tailwind class names for typos.
+- Use `@apply` in CSS for custom styles.
+- If a style isn’t applying, check for specificity or conflicting classes.
+
+---
+
+# 15. More Pro Tips & Gotchas
+- Always handle errors gracefully in the UI. Don’t leave users guessing.
+- Use loading spinners for async actions.
+- Keep your code DRY and modular.
+- Write comments for complex logic (future you will thank you).
+- If you’re stuck, take a break or ask for help—no shame!
+
+---
+
+# You’ve Reached the Boss Level!
+
+If you’ve read this entire documentation, you’re not just a dev—you’re a code spelunker, a bug whisperer, and the real MVP of this repo. You’ve scrolled further than most people scroll on Instagram (and that’s saying something).
+
+If you have any doubts or need help with the code, feel free to contact me on Instagram: **@shreyeahhs**
+
+Thanks for caring about quality code and good docs. May your bugs be shallow and your merges conflict-free!
+
+# End of Frontend Documentation
