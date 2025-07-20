@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: [self-hosted, Linux, X64, AI-Interview]
+    runs-on: [self-hosted, Linux]
 
 
 
