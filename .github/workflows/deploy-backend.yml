@@ -6,11 +6,11 @@ on:
       - main
     paths:
       - backend/**
-      - .github/workflows/deploy.yml
+      - .github/workflows/deploy-backend.yml
 
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: [self-hosted, linux]
 
     steps:
       - name: Checkout repo
