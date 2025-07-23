@@ -1,4 +1,4 @@
-name: Deploy to Google Compute Engine 
+name: Deploy to Google Compute Engine vm
 run-name: Deploy Backend
 on:
   push:
