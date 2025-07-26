@@ -5,10 +5,14 @@ Revises: 4ad0814e90fd
 Create Date: 2025-07-26 14:20:08.938383
 
 """
+import json
 from typing import Sequence, Union
 
 from alembic import op
 import sqlalchemy as sa
+from sqlalchemy.orm import Session
+
+from app.models import City, Country, State
 
 
 # revision identifiers, used by Alembic.
