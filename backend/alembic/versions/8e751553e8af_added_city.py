@@ -1,24 +1,19 @@
-"""populated company state and city
+"""added city
 
-Revision ID: 46e94b456cc0
-Revises: 1ca59a468554
-Create Date: 2025-06-16 17:01:06.724261
+Revision ID: 8e751553e8af
+Revises: 4ad0814e90fd
+Create Date: 2025-07-26 14:20:08.938383
 
 """
-
-import json
 from typing import Sequence, Union
 
 from alembic import op
 import sqlalchemy as sa
-from sqlalchemy.orm import Session
-
-from app.models import City, Country, State
 
 
 # revision identifiers, used by Alembic.
-revision: str = "46e94b456cc0"
-down_revision: Union[str, None] = "1ca59a468554"
+revision: str = '8e751553e8af'
+down_revision: Union[str, None] = '4ad0814e90fd'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
